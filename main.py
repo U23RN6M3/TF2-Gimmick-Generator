@@ -18,13 +18,15 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 
-def draw_window(req, result, include_unlockables):
+def draw_window(req, result, include_unlockables, include_reskins):
     bg = pygame.Surface((WIDTH, HEIGHT))
     WIN.blit(bg, (0, 0))
 
-    include_unlockables = DEFAULT_FONT.render("Include Unlockables: " + str(include_unlockables), 1, YELLOW)
+    include_unlockables = DEFAULT_FONT.render(" (>) Include Unlockables: " + str(include_unlockables), 1, YELLOW)
+    include_reskins = DEFAULT_FONT.render(" (<) Include Reskins: " + str(include_reskins), 1, YELLOW)
     result = DEFAULT_FONT.render("Result: " + str(result), 1, WHITE)
     requirements = DEFAULT_FONT.render("Requirements: " + str(req), 1, WHITE)
+    WIN.blit(include_unlockables, (10, 110))
     WIN.blit(include_unlockables, (10, 70))
     WIN.blit(result, (10, 10))
     WIN.blit(requirements, (10, 40))
@@ -78,7 +80,7 @@ def main():
             ],
             "Pyro":[
                 "Rainblower",
-                "Nostromo Napalmer",
+                "&&Nostromo Napalmer",
                 "Backburner",
                 "Degreaser",
                 "Phlogistinator",
@@ -93,14 +95,13 @@ def main():
                 "Iron Bomber"
             ],
             "Heavy":[
-                "Iron Curtain",
+                "&&Iron Curtain",
                 "Natascha",
                 "Brass Beast",
                 "Tomislav",
                 "Huo-Long Heater"
             ],
             "Engineer":[
-                "Shotgun",
                 "Frontier Justice",
                 "Widowmaker",
                 "Pomson 6000",
@@ -115,19 +116,19 @@ def main():
             ],
             "Sniper":[
                 "Sniper Rifle",
-                "AWper Hand",
+                "&&AWper Hand",
                 "Huntsman",
-                "Fortified Compound",
+                "&&Fortified Compound",
                 "Sydney Sleeper",
                 "Bazaar Bargain",
                 "Machina",
-                "Shooting Star",
+                "&&Shooting Star",
                 "Hitman's Heatmaker",
                 "Classic"
             ],
             "Spy":[
                 "Revolver",
-                "Big Kill",
+                "&&Big Kill",
                 "Diamondback",
                 "Ambassador",
                 "L'Etranger",
@@ -136,18 +137,18 @@ def main():
         },
         "Secondaries":{
             "Scout":[
-                "Lugermorph",
-                "C.A.P.P.E.R",
+                "&&Lugermorph",
+                "&&C.A.P.P.E.R",
                 "Winger",
                 "Pretty Boy's Pocket Pistol",
                 "Flying Guillotine",
                 "Bonk! Atomic Punch",
                 "Crit-o-Cola",
                 "Mad Milk",
-                "Mutated Milk"
+                "&&Mutated Milk"
             ],
             "Soldier":[
-                "Reserve Shooter",
+                "&&Reserve Shooter",
                 "Buff Banner",
                 "Gunboats",
                 "Battalions Backup",
@@ -158,7 +159,7 @@ def main():
                 "Panic Attack"
             ],
             "Pyro":[
-                "Reserve Shooter",
+                "&&Reserve Shooter",
                 "Flare Gun",
                 "Detonator",
                 "Manmelter",
@@ -178,18 +179,18 @@ def main():
             "Heavy":[
                 "Family Business",
                 "Sandvich",
-                "Robo-Sandvich",
+                "&&Robo-Sandvich",
                 "Dalakohs Bar",
-                "Fishcake",
+                "&&Fishcake",
                 "Buffalo Steak Sandvich",
                 "Panic Attack",
                 "Second Banana"
             ],
             "Engineer":[
-                "Lugermorph",
-                "C.A.P.P.E.R.",
+                "&&Lugermorph",
+                "&&C.A.P.P.E.R.",
                 "Wrangler",
-                "Giger Counter",
+                "&&Giger Counter",
                 "Short Circuit"
             ],
             "Medic":[
@@ -200,22 +201,22 @@ def main():
             "Sniper":[
                 "Cleaner's Carbine",
                 "Jarate",
-                "Self-Aware Beauty Mark",
+                "&&Self-Aware Beauty Mark",
                 "Razorback",
                 "Darwin's Danger Shield",
                 "Cozy Camper"
             ],
             "Spy":[
-                "Ap-Sap",
-                "Snack Attack",
+                "&&Ap-Sap",
+                "&&Snack Attack",
                 "Red-Tape Recorder"
             ],
         },
         "Melees":{
             "Scout":[
                 "Holy Mackerel",
-                "Unarmed Combat",
-                "Batsaber",
+                "&&Unarmed Combat",
+                "&&Batsaber",
                 "Sandman",
                 "Candy Cane",
                 "Boston Basher",
@@ -236,9 +237,9 @@ def main():
             "Pyro":[
                 "Lollichop",
                 "Axtinguisher",
-                "Postal Plummeler",
+                "&&Postal Plummeler",
                 "Homewrecker",
-                "Maul",
+                "&&Maul",
                 "Powerjack",
                 "Back Scratcher",
                 "Sharpened Volcano Fragment",
@@ -247,10 +248,10 @@ def main():
                 "Hot Hand"
             ],
             "Demo":[
-                "Scottish Handshake",
+                "&&Scottish Handshake",
                 "Eyelander",
-                "Horseless Headless Horsemann's Headtaker",
-                "Nessie's Nine Iron",
+                "&&Horseless Headless Horsemann's Headtaker",
+                "&&Nessie's Nine Iron",
                 "Scotsman's Skullcutter",
                 "Pain Train",
                 "Ullapool Caber",
@@ -259,17 +260,17 @@ def main():
                 "Persian Persuader"
             ],
             "Heavy":[
-                "Apoco-Fists",
+                "&&Apoco-Fists",
                 "KGB",
                 "GRU",
-                "Bread Bite",
+                "&&Bread Bite",
                 "Warrior's Spirit",
                 "Fists of Steel",
                 "Eviction Notice",
                 "Holiday Punch"
             ],
             "Engineer":[
-                "Golden Wrench",
+                "&&Golden Wrench",
                 "Gunslinger",
                 "Southern Hospitality",
                 "Jag",
@@ -287,10 +288,10 @@ def main():
                 "Shahanshah"
             ],
             "Spy":[
-                "Sharp Dresser",
-                "Black Rose",
+                "&&Sharp Dresser",
+                "&&Black Rose",
                 "Your Eternal Award",
-                "Wanga Prick",
+                "&&Wanga Prick",
                 "Conniver's Kunai",
                 "Big Earner",
                 "Spy-cicle"
@@ -440,6 +441,7 @@ def main():
     req = ""
 
     include_unlockables = False
+    include_reskins = False
 
     while run == True:
         clock.tick(FPS)
@@ -450,11 +452,16 @@ def main():
 
             key_pressed = pygame.key.get_pressed()
 
-            if key_pressed[pygame.K_DOWN]:
+            if key_pressed[pygame.K_RIGHT]:
                 if include_unlockables == False:
                     include_unlockables = True
                 elif include_unlockables == True:
                     include_unlockables = False
+            if key_pressed[pygame.K_LEFT]:
+                if include_reskins == False:
+                    include_reskins = True
+                elif include_reskins == True:
+                    include_reskins = False
             if key_pressed[pygame.K_UP]:
                 random.shuffle(weapon_rules)
                 random.shuffle(observations)
@@ -479,7 +486,11 @@ def main():
                     random.shuffle(class_weapon_library["Primaries"][tf2class])
                     if include_unlockables == True:
                         for i in class_weapon_library["Primaries"][tf2class]:
-                            primary_list.append(i)
+                            if include_reskins == False:
+                                if i[:2] != "&&":
+                                    primary_list.append(i[2:])
+                            else:
+                                primary_list.append(i)
                     for i in class_specific_primary_weapons[tf2class]:
                         primary_list.append(i)
                     b = primary_list[0]
@@ -488,7 +499,11 @@ def main():
                     random.shuffle(class_weapon_library["Secondaries"][tf2class])
                     if include_unlockables == True:
                         for i in class_weapon_library["Secondaries"][tf2class]:
-                            secondary_list.append(i)
+                            if include_reskins == False:
+                                if i[:2] != "&&":
+                                    secondary_list.append(i[2:])
+                            else:
+                                secondary_list.append(i)
                     for i in class_specific_secondary_weapons[tf2class]:
                         secondary_list.append(i)
                     c = secondary_list[0]
@@ -497,7 +512,11 @@ def main():
                     random.shuffle(class_weapon_library["Melees"][tf2class])
                     if include_unlockables == True:
                         for i in class_weapon_library["Melees"][tf2class]:
-                            melee_list.append(i)
+                            if include_reskins == False:
+                                if i[:2] != "&&":
+                                    melee_list.append(i[2:])
+                            else:
+                                melee_list.append(i)
                     for i in class_specific_melee_weapons[tf2class]:
                         melee_list.append(i)
                     d = melee_list[0]
@@ -506,7 +525,7 @@ def main():
                 req = " | Required Items: " + b + ", " + c + ", " + d + e
                 result = a
             
-            draw_window(req, result, include_unlockables)
+            draw_window(req, result, include_unlockables, include_reskins)
     if recalled == True:
         main()
 

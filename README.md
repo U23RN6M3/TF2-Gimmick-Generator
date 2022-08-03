@@ -2,4 +2,5 @@
  
 Instructions:
 - ArrowUp = Instance a Gimmick
-- ArrowDown = Toggle Unlockable Weapons
+- ArrowRight = Toggle Unlockable Weapons
+- ArrowLeft = Toggle Weapon Reskins
