@@ -1,4 +1,5 @@
 import random
+from re import A
 from sre_constants import NEGATE
 from turtle import color
 import pygame
@@ -14,19 +15,32 @@ DEFAULT_FONT = pygame.font.SysFont('comicsans', 15)
 FPS = 60
 
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
+GREEN = (0, 255, 200)
+RED = (255, 70, 70)
 YELLOW = (255, 255, 0)
 
 def draw_window(req, result, include_unlockables, include_reskins):
     bg = pygame.Surface((WIDTH, HEIGHT))
     WIN.blit(bg, (0, 0))
 
-    include_unlockables = DEFAULT_FONT.render(" (>) Include Unlockables: " + str(include_unlockables), 1, YELLOW)
-    include_reskins = DEFAULT_FONT.render(" (<) Include Reskins: " + str(include_reskins), 1, YELLOW)
-    result = DEFAULT_FONT.render("Result: " + str(result), 1, WHITE)
-    requirements = DEFAULT_FONT.render("Requirements: " + str(req), 1, WHITE)
-    WIN.blit(include_unlockables, (10, 110))
+    a = RED
+    b = RED
+
+    if include_unlockables == False:
+        a = RED
+    else:
+        a = GREEN
+    
+    if include_reskins == False:
+        b = RED
+    else:
+        b = GREEN
+
+    include_unlockables = DEFAULT_FONT.render("(m) Include Unlockables: " + str(include_unlockables), 1, a)
+    include_reskins = DEFAULT_FONT.render("(n) Include Reskins: " + str(include_reskins), 1, b)
+    result = DEFAULT_FONT.render("(Arrow Up) Result: " + str(result), 1, YELLOW)
+    requirements = DEFAULT_FONT.render("Requirements: " + str(req), 1, YELLOW)
+    WIN.blit(include_reskins, (10, 90))
     WIN.blit(include_unlockables, (10, 70))
     WIN.blit(result, (10, 10))
     WIN.blit(requirements, (10, 40))
@@ -53,10 +67,6 @@ def main():
         "Helpful",
         "Spy-Paranoid",
         "Enemy-Helping"
-    ]
-
-    weapon_rules = [
-        ""
     ]
 
     class_weapon_library = {
@@ -452,79 +462,91 @@ def main():
 
             key_pressed = pygame.key.get_pressed()
 
-            if key_pressed[pygame.K_RIGHT]:
-                if include_unlockables == False:
-                    include_unlockables = True
-                elif include_unlockables == True:
-                    include_unlockables = False
-            if key_pressed[pygame.K_LEFT]:
-                if include_reskins == False:
-                    include_reskins = True
-                elif include_reskins == True:
-                    include_reskins = False
-            if key_pressed[pygame.K_UP]:
-                random.shuffle(weapon_rules)
-                random.shuffle(observations)
-                random.shuffle(tf2classes)
-                tf2class = tf2classes[0]
-                slot_eliminator = random.randint(1, 5)
+            if event.type == pygame.KEYDOWN:
+                if key_pressed[pygame.K_m]:
+                    if include_unlockables == False:
+                        include_unlockables = True
+                    elif include_unlockables == True:
+                        include_unlockables = False
                 
-                b = "Don't Primary"
-                c = "Don't Secondary"
-                d = "Don't Melee"
-                e = ""
+                if key_pressed[pygame.K_n]:
+                    if include_reskins == False:
+                        include_reskins = True
+                    elif include_reskins == True:
+                        include_reskins = False
                 
-                primary_list = []
-                secondary_list = []
-                melee_list = []
 
-                if tf2class == "Spy" or tf2class == "Engineer" or tf2class == "Sniper":
-                    random.shuffle(class_special_items[tf2class])
-                    e = ", " + class_special_items[tf2class][0]
-                if slot_eliminator != 1:
-                    random.shuffle(class_specific_primary_weapons[tf2class])
-                    random.shuffle(class_weapon_library["Primaries"][tf2class])
-                    if include_unlockables == True:
-                        for i in class_weapon_library["Primaries"][tf2class]:
-                            if include_reskins == False:
-                                if i[:2] != "&&":
-                                    primary_list.append(i[2:])
-                            else:
-                                primary_list.append(i)
-                    for i in class_specific_primary_weapons[tf2class]:
-                        primary_list.append(i)
-                    b = primary_list[0]
-                if slot_eliminator != 2:
-                    random.shuffle(class_specific_secondary_weapons[tf2class])
-                    random.shuffle(class_weapon_library["Secondaries"][tf2class])
-                    if include_unlockables == True:
-                        for i in class_weapon_library["Secondaries"][tf2class]:
-                            if include_reskins == False:
-                                if i[:2] != "&&":
-                                    secondary_list.append(i[2:])
-                            else:
-                                secondary_list.append(i)
-                    for i in class_specific_secondary_weapons[tf2class]:
-                        secondary_list.append(i)
-                    c = secondary_list[0]
-                if slot_eliminator != 3:
-                    random.shuffle(class_specific_melee_weapons[tf2class])
-                    random.shuffle(class_weapon_library["Melees"][tf2class])
-                    if include_unlockables == True:
-                        for i in class_weapon_library["Melees"][tf2class]:
-                            if include_reskins == False:
-                                if i[:2] != "&&":
-                                    melee_list.append(i[2:])
-                            else:
-                                melee_list.append(i)
-                    for i in class_specific_melee_weapons[tf2class]:
-                        melee_list.append(i)
-                    d = melee_list[0]
+                if key_pressed[pygame.K_UP]:
+                    random.shuffle(observations)
+                    random.shuffle(tf2classes)
+                    tf2class = tf2classes[0]
+                    slot_eliminator = random.randint(1, 5)
+                    
+                    b = "Don't Primary"
+                    c = "Don't Secondary"
+                    d = "Don't Melee"
+                    e = ""
+                    
+                    primary_list = []
+                    secondary_list = []
+                    melee_list = []
+
+                    if tf2class == "Spy" or tf2class == "Engineer" or tf2class == "Sniper":
+                        random.shuffle(class_special_items[tf2class])
+                        e = ", " + class_special_items[tf2class][0]
+                    if slot_eliminator != 1:
+                        random.shuffle(class_specific_primary_weapons[tf2class])
+                        random.shuffle(class_weapon_library["Primaries"][tf2class])
+                        if include_unlockables == True:
+                            for i in class_weapon_library["Primaries"][tf2class]:
+                                if include_reskins == False:
+                                    if i[:2] != "&&":
+                                        primary_list.append(i)
+                                else:
+                                    if i[:2] == "&&":
+                                        primary_list.append(i[2:])
+                                    else:
+                                        primary_list.append(i)
+                        for i in class_specific_primary_weapons[tf2class]:
+                            primary_list.append(i)
+                        b = primary_list[0]
+                    if slot_eliminator != 2:
+                        random.shuffle(class_specific_secondary_weapons[tf2class])
+                        random.shuffle(class_weapon_library["Secondaries"][tf2class])
+                        if include_unlockables == True:
+                            for i in class_weapon_library["Secondaries"][tf2class]:
+                                if include_reskins == False:
+                                    if i[:2] != "&&":
+                                        secondary_list.append(i)
+                                else:
+                                    if i[:2] == "&&":
+                                        secondary_list.append(i[2:])
+                                    else:
+                                        secondary_list.append(i)
+                        for i in class_specific_secondary_weapons[tf2class]:
+                            secondary_list.append(i)
+                        c = secondary_list[0]
+                    if slot_eliminator != 3:
+                        random.shuffle(class_specific_melee_weapons[tf2class])
+                        random.shuffle(class_weapon_library["Melees"][tf2class])
+                        if include_unlockables == True:
+                            for i in class_weapon_library["Melees"][tf2class]:
+                                if include_reskins == False:
+                                    if i[:2] != "&&":
+                                        melee_list.append(i)
+                                else:
+                                    if i[:2] == "&&":
+                                        melee_list.append(i[2:])
+                                    else:
+                                        melee_list.append(i)
+                        for i in class_specific_melee_weapons[tf2class]:
+                            melee_list.append(i)
+                        d = melee_list[0]
+                    
+                    a = " | Name: " + " " + observations[0] + " " + observations[1] + " " + tf2class
+                    req = " | Required Items: " + b + ", " + c + ", " + d + e
+                    result = a
                 
-                a = " | Name: " + weapon_rules[0] + " " + observations[0] + " " + observations[1] + " " + tf2class
-                req = " | Required Items: " + b + ", " + c + ", " + d + e
-                result = a
-            
             draw_window(req, result, include_unlockables, include_reskins)
     if recalled == True:
         main()
